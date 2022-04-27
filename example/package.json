@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "freenewsapi": "file:../../packages/javascript"
+  }
+}
