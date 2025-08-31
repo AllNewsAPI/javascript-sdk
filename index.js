@@ -1,18 +1,18 @@
 /**
- * FreeNewsAPI SDK - A simple JavaScript wrapper for FreeNewsAPI
- * @author FreeNewsAPI
+ * AllNewsAPI SDK - A simple JavaScript wrapper for AllNewsAPI
+ * @author AllNewsAPI
  * @license MIT
- * @description This SDK provides a simple interface to interact with the Free News API, allowing you to search for news articles based on various parameters.
- * @see https://freenewsapi.com/documentation for the API documentation.
+ * @description This SDK provides a simple interface to interact with the AllNewsAPI, allowing you to search for news articles based on various parameters.
+ * @see https://allnewsapi.com/docs for the API documentation.
  * @version 1.0.0
  */
 
 class NewsAPI {
     /**
      * Create a new instance of the NewsAPI client
-     * @param {string} apiKey - Your Free News API key
+     * @param {string} apiKey - Your AllNewsAPI key
      * @param {Object} config - Optional configuration options
-     * @param {string} config.baseUrl - The base URL for the API (default: https://api.freenewsapi.com)
+     * @param {string} config.baseUrl - The base URL for the API (default: https://api.allnewsapi.com)
      */
     constructor(apiKey, config = {}) {
         if (!apiKey) {
@@ -20,8 +20,9 @@ class NewsAPI {
         }
 
         this.apiKey = apiKey;
-        this.baseUrl = config.baseUrl || "https://api.freenewsapi.com";
+        this.baseUrl = config.baseUrl || "https://api.allnewsapi.com";
         this.searchEndpoint = `${this.baseUrl}/v1/search`;
+        this.headlinesEndpoint = `${this.baseUrl}/v1/headlines`;
     }
   
     /**
@@ -30,8 +31,8 @@ class NewsAPI {
      * @returns {string} - The complete URL for the API request
      * @private
      */
-    _buildUrl(params = {}) {
-      const url = new URL(this.searchEndpoint);
+    _buildUrl(params = {}, endpoint = this.searchEndpoint) {
+      const url = new URL(endpoint);
       
       // Add API key
       url.searchParams.append("apikey", this.apiKey);
@@ -57,8 +58,8 @@ class NewsAPI {
      * @returns {Promise<Object>} - The API response
      * @private
      */
-    async _makeRequest(params = {}) {
-      const url = this._buildUrl(params);
+    async _makeRequest(params = {}, endpoint = this.searchEndpoint) {
+      const url = this._buildUrl(params, endpoint);
       
       try {
         const response = await fetch(url);
@@ -127,7 +128,7 @@ class NewsAPI {
      * @param {string|string[]} [options.publisher] - Publisher(s) to filter by
      * @param {string} [options.format] - Response format (json, csv, xlsx)
      * 
-     * @see https://freenewsapi.com/documentation for the complete API documentation.
+     * @see https://allnewsapi.com/docs for the complete API documentation.
      * @returns {Promise<Object>} - Search results
      */
     async search(options = {}) {
@@ -142,6 +143,40 @@ class NewsAPI {
       
       return this._makeRequest(options);
     }
+
+    /**
+     * Get headlines
+     * @param {Object} options - Headlines options (same as search options)
+     * @param {string} [options.q] - Keywords to search for
+     * @param {string|Date} [options.startDate] - Start date (YYYY-MM-DD or Date object)
+     * @param {string|Date} [options.endDate] - End date (YYYY-MM-DD or Date object)
+     * @param {boolean} [options.content] - Whether to include full content
+     * @param {string|string[]} [options.lang] - Language(s) to filter by
+     * @param {string|string[]} [options.country] - Country/countries to filter by
+     * @param {string|string[]} [options.region] - Region(s) to filter by
+     * @param {string|string[]} [options.category] - Category/categories to filter by
+     * @param {number} [options.max] - Maximum number of results (1-100)
+     * @param {string|string[]} [options.attributes] - Attributes to search in (title, description, content)
+     * @param {number} [options.page] - Page number for pagination
+     * @param {string} [options.sortby] - Sort by 'publishedAt' or 'relevance'
+     * @param {string|string[]} [options.publisher] - Publisher(s) to filter by
+     * @param {string} [options.format] - Response format (json, csv, xlsx)
+     *
+     * @see https://allnewsapi.com/docs for the complete API documentation.
+     * @returns {Promise<Object>} - Headlines results
+     */
+    async headlines(options = {}) {
+      // Format date objects to ISO strings if provided
+      if (options.startDate instanceof Date) {
+        options.startDate = options.startDate.toISOString();
+      }
+      
+      if (options.endDate instanceof Date) {
+        options.endDate = options.endDate.toISOString();
+      }
+      
+      return this._makeRequest(options, this.headlinesEndpoint);
+    }
   }
   
   /**
@@ -155,7 +190,7 @@ class NewsAPI {
      */
     constructor(statusCode, message) {
       super(message);
-      this.name = "FreeNewsAPIError";
+      this.name = "AllNewsAPIError";
       this.statusCode = statusCode;
     }
   }

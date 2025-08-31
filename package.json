@@ -1,7 +1,7 @@
 {
-  "name": "freenewsapi",
+  "name": "allnewsapi",
   "version": "1.0.0",
-  "description": "FreeNewsAPI SDK for the Javascript Programming language",
+  "description": "AllNewsAPI SDK for the Javascript Programming language",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.umd.js",
@@ -15,21 +15,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FreeNews-API/javascript-sdk.git"
+    "url": "git+https://github.com/AllNewsAPI/javascript-sdk.git"
   },
   "keywords": [
-    "freenewsapi",
+    "allnewsapi",
     "news",
     "api",
     "news",
     "sdk"
   ],
-  "author": "freenewsapi",
+  "author": "allnewsapi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FreeNews-API/javascript-sdk/issues"
+    "url": "https://github.com/AllNewsAPI/javascript-sdk/issues"
   },
-  "homepage": "https://github.com/FreeNews-API/javascript-sdk/#readme",
+  "homepage": "https://github.com/AllNewsAPI/javascript-sdk/#readme",
   "devDependencies": {
     "rollup": "^2.79.2",
     "rollup-plugin-terser": "^7.0.2"

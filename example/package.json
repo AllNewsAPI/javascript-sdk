@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "freenewsapi": "file:../../packages/javascript"
+    "allnewsapi": "file:../../packages/javascript"
   }
 }
